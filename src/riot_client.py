@@ -73,20 +73,6 @@ def riot_get(url):
         return response.json()
     raise RuntimeError('Finished')
 
-def extract_features(match: dict, puuid: str) -> dict:
-    team_of = {p["participantId"]: p["teamId"] for p in match["info"]["participants"]}
-    frames = timeline["info"]["frames"]
-
-    totals = {100: {"gold": 0, "xp": 0, "level": 0, "cs": 0},
-              200: {"gold": 0, "xp": 0, "level": 0, "cs": 0}}
-              
-
-    
-    for pid, pf in frames[10]["participantFrames"].items():
-        team = team_of[int(pid)]
-        totals[team] += pf["..."]
-
-
 
 
 def extract_stats(match: dict, puuid: str) -> dict:
