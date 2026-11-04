@@ -18,8 +18,15 @@ def extract_features(match: dict, timeline: dict) -> dict:
     xp_diff = totals[100]["xp"] - totals[200]["xp"]
     level_diff = totals[100]["level"] - totals[200]["level"]
     cs_diff = totals[100]["cs"] - totals[200]["cs"]
+
+    for team in match["info"]["teams"]:
+        if team["teamId"] == 100:
+            blue_win = int(team["win"])
+
+
     return { "gold_diff": gold_diff, 
             "xp_diff": xp_diff, 
             "level_diff": level_diff, 
             "cs_diff": cs_diff, 
+            "blue_win": blue_win,
             } 
