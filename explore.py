@@ -34,3 +34,4 @@ print(frames[10]["timestamp"])
 
 
 types = {e["type"] for fr in frames for e in fr["events"]}
+print(types)
