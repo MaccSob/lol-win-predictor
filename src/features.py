@@ -1,9 +1,8 @@
 def extract_features(match: dict, timeline: dict) -> dict:
     team_of = {p["participantId"]: p["teamId"] for p in match["info"]["participants"]}
     frames = timeline["info"]["frames"]
-    cutoff = 600_000  # 10:00 w milisekundach
+    cutoff = 600_000  
 
-    # --- sumy drużynowe z ramki 10 ---
     totals = {
         100: {"gold": 0, "xp": 0, "level": 0, "cs": 0},
         200: {"gold": 0, "xp": 0, "level": 0, "cs": 0},
@@ -15,9 +14,9 @@ def extract_features(match: dict, timeline: dict) -> dict:
         totals[team]["level"] += pf["level"]
         totals[team]["cs"] += pf["minionsKilled"] + pf["jungleMinionsKilled"]
 
-    # --- zabójstwa do 10:00 ---
+  
     kills = {100: 0, 200: 0}
-    kill_log = []  # lista (czas, drużyna zabójcy)
+    kill_log = []  
     for frame in frames[:11]:
         for e in frame["events"]:
             if e["type"] != "CHAMPION_KILL" or e["timestamp"] > cutoff:
@@ -29,12 +28,12 @@ def extract_features(match: dict, timeline: dict) -> dict:
             kills[team] += 1
             kill_log.append((e["timestamp"], team))
 
-    # pierwsza krew: 1 = niebiescy, -1 = czerwoni, 0 = brak zabójstw do 10:00
+    
     first_blood = 0
     if kill_log:
         first_blood = 1 if min(kill_log)[1] == 100 else -1
 
-    # --- etykieta ---
+ 
     blue_win = 0
     for team in match["info"]["teams"]:
         if team["teamId"] == 100:
